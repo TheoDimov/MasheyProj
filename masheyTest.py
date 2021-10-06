@@ -3,7 +3,7 @@
 
 import requests
 import json
-
+import operator
 
 # This function returns in JSON the closest approach per astroid in the NASA browse API. 
 
@@ -116,7 +116,6 @@ def month_closest_approaches(month, year):
     # But certainly can be with an improved merger
     return(json.dumps(list_of_jsons, indent=3, sort_keys=False))
 
-
 # The last function collected 10 closest misses from the browse API. Not completed yet, biggest obstacle is the sorting of the JSON by
 # distance which was not yet successfully completed by sort, sorted, including lambda functions.
 
@@ -137,7 +136,13 @@ def nearest_misses():
 
         i["close_approach_data"] = [i["close_approach_data"][cdIndex]]
 
-    #new_json.sort(key=lambda x: new_json['near_earth_objects'][0]['close_approach_data'][0]['miss_distance']['miles'])
+    # Portion of attempts made at sorting, indices don't match when placed in lambda functions. Dict not accepted in sort function and
+    # string indicies not accepted in sorted function
+
+    #new_json = json.loads(new_json)   
+    #new_json.sort(key=lambda x: x['near_earth_objects'][0]['close_approach_data'][0]['miss_distance']['miles'])
+    #new_json = sorted(new_json, key=lambda k: k[1][0])#[2][0])#'near_earth_objects'])#[0]['close_approach_data'][0]['miss_distance']['miles'])#['close_approach_data'][0]['miss_distance']['miles'])
+    
     return(json.dumps(new_json, indent=3, sort_keys=False))
 
 
